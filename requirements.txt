@@ -1,4 +1,6 @@
-Flask
+
 pandas
 azure-storage-blob
 gunicorn
+Flask>=2.0
+python-dotenv
