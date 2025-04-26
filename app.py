@@ -5,11 +5,11 @@ import pandas as pd
 from io import BytesIO
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('your-super-secret-flask-key-goes-here')
+app.secret_key = os.environ.get('FLASK_SCERET')
 
 # Azure Blob config from environment
-blob_conn = os.environ['DefaultEndpointsProtocol=https;AccountName=retailanalyticsstorage1;AccountKey=3mX/rYbcn3WVf1rhCIA281tdDPypuMgN3A7nRrbgDwcUo7DUShJZOh6ORuYGUwF6oYZfyopMwo5C+ASt8D628A==;EndpointSuffix=core.windows.net']
-container = os.environ['project-data']
+blob_conn = os.environ['AZURE_BLOB_CONN_STR']
+container = os.environ['AZURE_CONTAINER']
 blob_svc  = BlobServiceClient.from_connection_string(blob_conn)
 
 def load_csv(blob_name):
