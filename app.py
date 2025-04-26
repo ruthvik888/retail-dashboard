@@ -8,24 +8,38 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET', 'change-me')
 
 # Azure Blob config from environment
-blob_conn = os.environ['AZURE_BLOB_CONN_STR']
-container = os.environ['AZURE_CONTAINER']
+blob_conn = os.environ['DefaultEndpointsProtocol=https;AccountName=retailanalyticsstorage1;AccountKey=3mX/rYbcn3WVf1rhCIA281tdDPypuMgN3A7nRrbgDwcUo7DUShJZOh6ORuYGUwF6oYZfyopMwo5C+ASt8D628A==;EndpointSuffix=core.windows.net']
+container = os.environ['project-data']
 blob_svc  = BlobServiceClient.from_connection_string(blob_conn)
 
-def load_csv(name):
-    b = blob_svc.get_blob_client(container=container, blob=name)
-    data = b.download_blob().readall()
+def load_csv(blob_name):
+    client = blob_svc.get_blob_client(container=container, blob=blob_name)
+    data = client.download_blob().readall()
     df = pd.read_csv(BytesIO(data))
-    # normalize column names
+    # strip whitespace, uppercase
     df.columns = df.columns.str.strip().str.upper()
     return df
 
-# Load once on start
+# ─── load your three tables ───────────────────────────────────────────────────
 df_house = load_csv('400_households.csv')
 df_tx    = load_csv('400_transactions.csv')
 df_prod  = load_csv('400_products.csv')
 
-# ensure numeric keys
+# ─── align column names with what the CSV actually uses ────────────────────────
+# Households table already has HSHD_NUM
+# Transactions table uses PURCHASE_DATE (or PURCHASE_) as the date column
+if 'PURCHASE_' in df_tx.columns:
+    df_tx.rename(columns={'PURCHASE_': 'DATE'}, inplace=True)
+elif 'PURCHASE_DATE' in df_tx.columns:
+    df_tx.rename(columns={'PURCHASE_DATE': 'DATE'}, inplace=True)
+else:
+    raise RuntimeError("Couldn't find the transaction date column!")
+
+# Products table has BRAND_TY but you may want BRAND_TYPE later:
+if 'BRAND_TY' in df_prod.columns:
+    df_prod.rename(columns={'BRAND_TY': 'BRAND_TYPE'}, inplace=True)
+
+# ─── coerce your join keys to numeric ─────────────────────────────────────────
 df_house['HSHD_NUM']    = pd.to_numeric(df_house['HSHD_NUM'],    errors='coerce')
 df_tx   ['HSHD_NUM']    = pd.to_numeric(df_tx   ['HSHD_NUM'],    errors='coerce')
 df_tx   ['PRODUCT_NUM'] = pd.to_numeric(df_tx   ['PRODUCT_NUM'], errors='coerce')
