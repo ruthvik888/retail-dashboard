@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+  <h1 class="mb-4">Welcome to the Retail Dashboard</h1>
+  <p class="lead mb-4">Choose an action below to get started:</p>
+  <a href="{{ url_for('search') }}" class="btn btn-lg btn-primary mx-2">🔍 Search Data Pull</a>
+  <a href="{{ url_for('sample_data') }}" class="btn btn-lg btn-secondary mx-2">📊 View Sample Data</a>
+</div>
+{% endblock %}
