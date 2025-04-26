@@ -1,0 +1,4 @@
+Flask
+pandas
+azure-storage-blob
+gunicorn
