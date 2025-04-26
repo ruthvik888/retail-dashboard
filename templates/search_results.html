@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Results for #{{ hshd }}{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">Data Pull for Household #{{ hshd }}</h3>
+
+{% if rows %}
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>HSHD_NUM</th>
+          <th>BASKET_NUM</th>
+          <th>DATE</th>
+          <th>PRODUCT_NUM</th>
+          <th>DEPARTMENT</th>
+          <th>COMMODITY</th>
+          <th>SPEND</th>
+          <th>UNITS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r.HSHD_NUM }}</td>
+          <td>{{ r.BASKET_NUM }}</td>
+          <td>{{ r.DATE }}</td>
+          <td>{{ r.PRODUCT_NUM }}</td>
+          <td>{{ r.DEPARTMENT }}</td>
+          <td>{{ r.COMMODITY }}</td>
+          <td>{{ r.SPEND }}</td>
+          <td>{{ r.UNITS }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="alert alert-warning">
+    No records found for Household #{{ hshd }}.
+  </div>
+{% endif %}
+
+<a href="{{ url_for('search') }}" class="btn btn-secondary mt-3">← Back to Search</a>
+{% endblock %}
