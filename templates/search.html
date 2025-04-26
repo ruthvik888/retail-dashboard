@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Search Household{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h3 class="card-title mb-4">Search Household Data</h3>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">HSHD_NUM</label>
+            <input type="number" class="form-control" name="hshd_num"
+                   value="{{ request.args.get('hshd_num','') }}" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
