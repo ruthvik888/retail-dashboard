@@ -2,10 +2,39 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="text-center py-5">
-  <h1 class="mb-4">Welcome to the Retail Dashboard</h1>
-  <p class="lead mb-4">Choose an action below to get started:</p>
-  <a href="{{ url_for('search') }}" class="btn btn-lg btn-primary mx-2">🔍 Search Data Pull</a>
-  <a href="{{ url_for('sample_data') }}" class="btn btn-lg btn-secondary mx-2">📊 View Sample Data</a>
+<h2 class="text-center mb-5">📊 Retail Insights Dashboard</h2>
+
+<!-- Chart 1: Total Spend Over Time -->
+<div class="mb-5">
+  <h5 class="text-center">Engagement Over Time: Total Spend by Month</h5>
+  <img src="data:image/png;base64,{{ spend_plot }}" class="img-fluid d-block mx-auto"/>
 </div>
+
+<!-- Chart 2: Brand Preference -->
+<div class="row mb-5">
+  <div class="col-md-6 text-center">
+    <h5>Brand Preference (National vs Private)</h5>
+    <img src="data:image/png;base64,{{ brand_plot }}" class="img-fluid"/>
+  </div>
+
+  {% if organic_plot %}
+  <div class="col-md-6 text-center">
+    <h5>Organic vs Non-Organic Choices</h5>
+    <img src="data:image/png;base64,{{ organic_plot }}" class="img-fluid"/>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Chart 3: Category Spend Trend -->
+<div class="mb-5">
+  <h5 class="text-center">Top Product Categories Over Time</h5>
+  <img src="data:image/png;base64,{{ category_plot }}" class="img-fluid d-block mx-auto"/>
+</div>
+
+<!-- Chart 4: Basket Analysis - Cross-Selling -->
+<div class="mb-5">
+  <h5 class="text-center">Basket Analysis: Top Product Combinations</h5>
+  <img src="data:image/png;base64,{{ cross_plot }}" class="img-fluid d-block mx-auto"/>
+</div>
+
 {% endblock %}
