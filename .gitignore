@@ -1,5 +1,36 @@
+# Python environments
+venv/
+.venv/
+env/
+*.egg-info/
+
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
-venv/
-*.egg-info/
+
+# Environment/configuration
+*.env
+local.settings.json
+
+# Static file uploads and data
+uploads/
+static/uploads/
+*.csv
+*.xlsx
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+# Editor junk
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.swp
