@@ -61,9 +61,6 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user' not in session:
-        flash("Please log in first", "warning")
-        return redirect(url_for('login'))
 
     merged = df_tx.merge(df_house, on='HSHD_NUM') \
                   .merge(df_prod, on='PRODUCT_NUM')
