@@ -5,3 +5,5 @@ pandas==1.4.2
 azure-storage-blob==12.8.1
 azure-core==1.26.1
 gunicorn==20.1.0
+matplotlib
+
