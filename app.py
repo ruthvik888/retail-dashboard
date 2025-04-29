@@ -8,7 +8,7 @@ import base64
 
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('FLASK_SCERET')
+app.secret_key = os.environ.get('FLASK_SECRET')
 
 # Azure Blob config from environment
 blob_conn = os.environ['AZURE_BLOB_CONN_STR']
